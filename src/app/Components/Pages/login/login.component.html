@@ -1,0 +1,91 @@
+<div class="container-main-login">
+
+  <div class="wrapper-product-navs" *ngIf="showDropdown">
+    <div class="wrapper">
+      <div
+        class="container-product-navs"
+        (mouseleave)="selectedCategory = null"
+      >
+        <span
+          *ngFor="let category of productCategoryData; let i = index"
+          (mouseenter)="selectedCategory = i"
+          [ngClass]="{ selected: selectedCategory === i }"
+          >{{ category.name }}
+          <fa-icon
+            *ngIf="category.subCategories.length"
+            [icon]="chevronRight"
+          ></fa-icon>
+        </span>
+        <div
+          *ngIf="
+            selectedCategory !== null &&
+            productCategoryData[selectedCategory].subCategories.length
+          "
+          class="container-dropdown"
+        >
+          <div
+            *ngFor="
+              let subCat of productCategoryData[selectedCategory].subCategories
+            "
+            class="container-category-column"
+          >
+            <a
+              href="javascript:void(0)"
+              *ngFor="let item of subCat"
+              (click)="navigate({},'products')"
+              [ngClass]="{ bold: item.expand }"
+              >{{ item.name }}
+              <fa-icon *ngIf="item.expand" [icon]="caretRight"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="container-login" >
+      <div class="container-hero">
+        <p class="login-title">
+          {{ isSignup ? "Looks like you're new here!" : "Login" }}
+        </p>
+        <p class="login-subtitle">
+          {{
+            isSignup
+              ? "Sign up with your email to get started"
+              : "Get access to your Orders, Wishlist and Recommendations"
+          }}
+        </p>
+      </div>
+      <div class="container-form">
+        <form>
+          <div class="container-form-top">
+            <input
+              type="text"
+              name=""
+              id=" "
+              placeholder="Enter Email Address"
+            />
+            <span
+              >By continuing, you agree to Flipkart's
+              <a href="javascript:void(0)">Terms of Use</a> and
+              <a href="javascript:void(0)">Privacy Policy</a>.</span
+            >
+            <button  class="btn-login">
+              {{ isSignup ? "CONTINUE" : "Login" }}
+            </button>
+            <button *ngIf="isSignup" (click)="signupToggle(false)" type="button" class="btn-signup">
+                Existing User? Log in
+            </button>
+          </div>
+          <a
+            *ngIf="!isSignup"
+            href="javascript:void(0)"
+            (click)="signupToggle(true)"
+            >New to Flipkart? Create an account</a
+          >
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
